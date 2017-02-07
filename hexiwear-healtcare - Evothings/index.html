@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+
+<html>
+
+<head>
+
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, user-scalable=no,
+    shrink-to-fit=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
+
+  <title>HEXIWEAR Healthcare</title>
+
+  <style>
+    @import 'ui/css/evothings-app.css';
+  </style>
+
+  <script>
+  // Redirect console.log to Evothings Workbench.
+  if (window.hyper && window.hyper.log) { console.log = hyper.log }
+  </script>
+
+</head>
+
+<body>
+  <header>
+    <button class="back" onclick="history.back()">
+      <img src="ui/images/arrow-left.svg" />
+    </button>
+    <img class="logotype" src="ui/images/logo.svg" alt="Evothings" />
+  </header>
+
+  <h1>Hexiwear Healthcare System</h1>
+
+
+  <p id="status">Not initialized</p>
+
+  <button id="connectButton" class="green wide">
+    Connect
+  </button>
+
+  <button id="disconnectButton" class="red wide">
+    Disconnect
+  </button>
+
+    <button id="sendSMS" class="yellow" onclick="app.sendSMS()">
+        SMS
+    </button>
+
+  
+  <p>
+    Mode: <span id="mode"></span><br />
+    Alarm Status: <span id="alarm"></span><br />
+  </p>
+
+
+
+  <h3>Device info:</h3>
+  <p>
+    Manufacturer: <span id="manufacturer"></span><br />
+    Firmware: <span id="firmware"></span><br />
+    Serial: <span id="serial"></span><br />
+  </p>
+
+  <script src="cordova.js"></script>
+  <script src="libs/evothings/evothings.js"></script>
+  <script src="libs/evothings/util/util.js"></script>
+  <script src="libs/evothings/ui/ui.js"></script>
+  <script src="app.js"></script>
+
+    <script>
+	// Application object.
+	var app = {
+		/* Phone number through which the message will be sent upon movement.
+		 * Replace with your own phone number. */
+		PHONE_NUMBER : '05056541066',
+		// Message sent to the recipient's phone upon device movement.
+		SMS_MESSAGE : 'Motion has been detected',
+		/* Interval at which to check for device movement, in milliseconds.
+		 * Lower values means we are able to detect smaller movements, and
+		 * higher values means less battery consumption.
+		 */
+		movement_check_interval: 3000
+
+	}
+
+
+
+
+	// Send the alert SMS.
+	app.sendSMS = function()
+	{
+		var options = {}
+		var success = function ()
+		{
+		    document.getElementById("status").innerHTML = 'Message sent successfully';
+		}
+		var error = function (e)
+		{
+		    document.getElementById("status").innerHTML = 'Message failed:';
+		}
+		sms.send(
+			app.PHONE_NUMBER,
+			app.SMS_MESSAGE,
+			options,
+			success,
+			error
+		)
+	}
+	
+
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+</body>
+
+</html>
